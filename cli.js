@@ -1,18 +1,9 @@
-var startText = `Welcome to JamesOS LTS
-            
-System information as of ${new Date().toUTCString()}
-               
-System load:            ${Math.random().toFixed(4)}
-Usage of /:             ${(Math.random()*100).toFixed(2)}% of ${(Math.random()*100).toFixed(0)}GB
-Memory usage:           ${(Math.random()*100).toFixed(2)}%
-Swap usage:             ${(Math.random()*100).toFixed(2)}%
-Processes:              ${(Math.random()*100+30).toFixed(0)}
-IPv4 address for www:   35.214.3.155
+// ||== Variables ==|| 
+// startText: The text that is displayed when the page is loaded
+var startText = `Welcome to JamesOS LTS\nSystem information as of ${new Date().toUTCString()}\n\nSystem load:            ${Math.random().toFixed(4)}\nUsage of /:             ${(Math.random()*100).toFixed(2)}% of ${(Math.random()*100).toFixed(0)}GB\nMemory usage:           ${(Math.random()*100).toFixed(2)}%\nSwap usage:             ${(Math.random()*100).toFixed(2)}%\nProcesses:              ${(Math.random()*100+30).toFixed(0)}\nIPv4 address for www:   35.214.3.155\n\n${(Math.random()*50).toFixed(0)} package(s) can be updated.\nTo check for new updates run: sudo apt update`
 
-${(Math.random()*50).toFixed(0)} package(s) can be updated.
-To check for new updates run: sudo apt update
-`
 
+// |=
 var cli = document.getElementById('cli');
 var output = document.getElementById('output');
 var prompt = document.getElementById('prompt');
@@ -70,6 +61,8 @@ document.onkeydown = e => {
         clearTerm();
     }
 }
+
+
 
 function help() {
     output.innerText += '\n' + 'This is the help menu, choose a command from the list below:';

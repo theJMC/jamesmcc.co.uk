@@ -31,7 +31,10 @@ body {
 .interface, .interface > * {
     background-color: black;
     font-family: 'Fira Code', monospace;
-    color: var(--text-clr);
+    color: var(--text-clr);   
+}
+
+.interface p {
     white-space: pre-wrap;
 }
 
