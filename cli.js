@@ -37,6 +37,10 @@ cli.addEventListener("keydown", e => {
                 help();
                 break;
 
+            case /^time now$/.test(command): // Help Command
+                getTime();
+                break;
+
                 
             case /^open /.test(command): // Open Command
                 openCmd(command);
@@ -86,4 +90,8 @@ function openCmd(cmd) {
 
 function clearTerm() {
     output.innerText = '';
+}
+
+function getTime() {
+    output.innerText += '\n' + new Date().toUTCString();
 }
