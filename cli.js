@@ -1,53 +1,82 @@
+
+function writeText(text) {
+    if (output.innerText == '') {
+        output.innerText = text;
+        return;
+    } 
+    output.innerText += '\n' + text;
+}
+
+
+// ||== Commands ==||
+var helpScheme = { // Help Command
+    cmdText: 'This is the help menu, choose a command from the list below:\n\thelp - shows this menu\n\topen - opens a profile of me',
+    func: () => { 
+        writeText(helpScheme.cmdText)
+    }
+}
+
+var openScheme = { // Open Command
+    name: "open",
+    cmdText: 'Usage: open [PROFILE]\nOpens one of my Profiles\nPROFILES:\n\t- github: Opens my Github Page',
+    helpText: "opens a profile of me",
+    func: (cmd) => {
+        if (cmd == 'open github') {
+            writeText("Opening Github Profile...");
+            window.open('https://github.com/thejmc');
+        } else {
+            writeText(openScheme.cmdText);
+        }
+    }
+}
+
+var timeScheme = { // Time Command
+    cmdText: "Usage: time now\nShows the current time",
+    func: () => { writeText(new Date().toUTCString()); }
+}
+
+
+
+
+// Special Commands
+var clearScheme = {
+    cmdText: "Usage: clear\nClears the terminal of all text",
+    func: () => { output.innerText = ''; }
+}
+
+// Main Command Definitions
+var commands = {
+    help: helpScheme,
+
+    open: openScheme,
+
+    time: timeScheme,
+
+    clear: clearScheme,
+    cls: clearScheme
+
+}
+
 // ||== Variables ==|| 
 // startText: The text that is displayed when the page is loaded
 var startText = `Welcome to JamesOS LTS\nSystem information as of ${new Date().toUTCString()}\n\nSystem load:            ${Math.random().toFixed(4)}\nUsage of /:             ${(Math.random()*100).toFixed(2)}% of ${(Math.random()*100).toFixed(0)}GB\nMemory usage:           ${(Math.random()*100).toFixed(2)}%\nSwap usage:             ${(Math.random()*100).toFixed(2)}%\nProcesses:              ${(Math.random()*100+30).toFixed(0)}\nIPv4 address for www:   35.214.3.155\n\n${(Math.random()*50).toFixed(0)} package(s) can be updated.\nTo check for new updates run: sudo apt update`
 
+var promptValue = 'james@jamesmcc.co.uk$ '
 
-// |=
+
+// ||== Document Elements ==||
 var cli = document.getElementById('cli');
 var output = document.getElementById('output');
 var prompt = document.getElementById('prompt');
 
-var promptValue = 'james@jamesmcc.co.uk$ '
 
+// ||== Document Events ==||
 document.addEventListener("DOMContentLoaded", () => {
     prompt.innerText = promptValue;
     output.innerText = startText;
 });
 
-
-cli.addEventListener("keydown", e => {
-    if (e.key == "Enter") {
-        var command = cli.value;
-        cli.value = ''
-        output.innerText += '\n' + promptValue + command;
-        switch (true) {
-
-            // Main Command Loops 
-            case /^help$/.test(command): // Help Command
-                help();
-                break;
-
-            case /^time now$/.test(command): // Help Command
-                getTime();
-                break;
-
-                
-            case /^open /.test(command): // Open Command
-                openCmd(command);
-                break;
-
-            case /^clear$|^cls$/.test(command): // Clear Command
-                clearTerm();
-                break;
-
-            // Default Command
-            case true:
-                output.innerText += '\n' + 'Command not found, type help for a list of commands';
-        }
-    }
-});
-
+// On CTRL-L clear the terminal
 document.onkeydown = e => {
     if (
         (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) ||
@@ -58,33 +87,31 @@ document.onkeydown = e => {
     ) {
         return;
     } else if (e.ctrlKey && e.key === 'l') {
-        clearTerm();
+        commands.clear.func();
     }
 }
 
+// When a command is triggered
+cli.addEventListener("keydown", e => {
+    if (e.key != "Enter") { return; }
+    var command = cli.value; // Get the command
+    cli.value = '' // Clear the command line
+    writeText(promptValue + command); // Write the command to the terminal
 
-
-function help() {
-    output.innerText += '\n' + 'This is the help menu, choose a command from the list below:';
-    output.innerText += '\n' + 'help - shows this menu';
-    output.innerText += '\n' + 'open - opens a profile of me';
-}
-
-function openCmd(cmd) {
-    var helpText = "Usage: open [PROFILE]\nOpens one of my Profiles\nPROFILES:\n\t- github: Opens my Github Page"
-
-    if (cmd == 'open -h') {
-        output.innerText += helpText;
-    } else if (cmd == 'open github') {
-        output.innerText += "\nOpening Github Profile...";
-        window.open('https://github.com/thejmc');
+    var rootCMD = command.split(' ')[0]; // Get the root command
+    if (commands[rootCMD] == undefined) { // If the root command is not defined
+        commands.help.func(); // Run the help command
+        return;
+    } else {
+        commands[rootCMD].func(command); // Run the command
     }
-}
+});
 
-function clearTerm() {
-    output.innerText = '';
-}
 
-function getTime() {
-    output.innerText += '\n' + new Date().toUTCString();
-}
+
+
+
+
+
+
+

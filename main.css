@@ -1,5 +1,6 @@
 :root {
     --text-clr: #48ff0b;
+    background-color: black;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
@@ -23,7 +24,6 @@ body {
     background-color: black;
 }
 
-
 .code {
     font-family: 'Fira Code', monospace;
 }
@@ -43,4 +43,8 @@ body {
     background-color: black;
     color: var(--text-clr);
     border: none;
+}
+
+.interface input:focus {
+    outline: none;
 }
