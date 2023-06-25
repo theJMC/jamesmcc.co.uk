@@ -1,0 +1,43 @@
+:root {
+    --text-clr: #48ff0b;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+@font-face {
+    font-family: "HeadingFont";
+    src: url("./Advent_Pro.ttf");
+}
+
+.title {
+    font-family: "HeadingFont";
+    color: var(--text-clr);
+}
+
+.nav_item {
+    font-family: 'Fira Code', monospace;
+    color: var(--text-clr);
+}
+
+body {
+    background-color: black;
+}
+
+
+.code {
+    font-family: 'Fira Code', monospace;
+}
+
+.interface, .interface > * {
+    background-color: black;
+    font-family: 'Fira Code', monospace;
+    color: var(--text-clr);
+    white-space: pre-wrap;
+}
+
+.interface input {
+    width: 100%;
+    background-color: black;
+    color: var(--text-clr);
+    border: none;
+}
